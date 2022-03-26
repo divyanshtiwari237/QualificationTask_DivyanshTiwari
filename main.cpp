@@ -7,6 +7,8 @@
 #include "utilities.hpp"
 #include"boostimpl.hpp"
 #include<boost/numeric/odeint.hpp>
+#include"matplotlibcpp.cpp"
+namespace plt =matplotlibcpp;
 typedef std::vector< double > state_type;
  using namespace boost::numeric::odeint;
 
@@ -18,7 +20,7 @@ int main()
     double E[3] ={0,0,0};  //initialize the electric field
     double B[3]={0,0,11};  //initialize the magnetic field
     double y[6]={0,0.9*c,0,0,0,0}; // initial conditions of the particle
-    int n =10000;
+    int n =1000;
     double tStep=pow(10,-6);      // time step;
     
     
@@ -104,6 +106,8 @@ int main()
          ti.push_back(t0);
          std::cout<<z[0]<<z[1]<<z[2]<<std::endl;
      }
+     
+
      simplePlotter(Px,ti,ypx,t,"pxplot.png");
      simplePlotter(Py,ti,ypy,t,"pyplot.png");
      simplePlotter(Pz,ti,ypz,t,"pzplot.png");
