@@ -48,7 +48,7 @@ class RK2
             answerz.push_back(w[5]);
             time.push_back(t0 +i*tStep);
            
-            file<<w[0]<<","<<w[1]<<","<<w[2]<<","<<w[3]<<","<<w[4]<<","<<w[5]<<","<<std::endl;
+            file<<w[0]<<","<<w[1]<<","<<w[2]<<","<<w[3]<<","<<w[4]<<","<<w[5]<<std::endl;
             
             y=w;
         }
