@@ -11,8 +11,9 @@ class RK2
 {
     public:
     
-    RK2( double to, double tF, double e[], double b[])
+    RK2( double to, double tF, double e[], double b[],double tstep)
     {
+        tStep=tstep;
         t0=to;
         tf=tF;
         for(int i=0;i<3;i++)
@@ -22,10 +23,10 @@ class RK2
         }       
     }
 
-    void rk2(double y[],double n)
+    void rk2(double y[])
     {
-        tStep=(tf-t0)/n;
-        iFinal =n;
+        iFinal=(tf-t0)/tStep;
+       
 
         y[0]*=mass;
         y[1]*=mass;

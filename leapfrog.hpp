@@ -8,8 +8,9 @@
 class LeapFrog
 {
     public:
-    LeapFrog( double to, double tF, double e[], double b[])
+    LeapFrog( double to, double tF, double e[], double b[], double tstep)
     {
+        tStep =tstep;
         t0=to;
         tf=tF;
         for(int i=0;i<3;i++)
@@ -19,10 +20,10 @@ class LeapFrog
         }       
     }
 
-    void leapfrogcall(double y[],double n)
+    void leapfrogcall(double y[])
     {
-        tStep=(tf-t0)/n;
-        iFinal =n;
+        iFinal=(tf-t0)/tStep;
+        
 
         y[0]*=mass;
         y[1]*=mass;
