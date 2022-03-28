@@ -1,17 +1,14 @@
-#ifndef RK45_H
-#define RK45_H
+#ifndef LEAP_H
+#define LEAP_H
 #include <math.h>
 #include <iostream>
-#include <fstream>
 #include <string>
 #include<vector>
 
-
-class RK2 
+class LeapFrog
 {
     public:
-    
-    RK2( double to, double tF, double e[], double b[])
+    LeapFrog( double to, double tF, double e[], double b[])
     {
         t0=to;
         tf=tF;
@@ -22,7 +19,7 @@ class RK2
         }       
     }
 
-    void rk2(double y[],double n)
+    void leapfrogcall(double y[],double n)
     {
         tStep=(tf-t0)/n;
         iFinal =n;
@@ -31,14 +28,11 @@ class RK2
         y[1]*=mass;
         y[2]*=mass;
 
-        std::ofstream file;
-        file.open("data.csv", std::ios_base::app);
         
-        //file<<"ColumnPx"<<","<<"ColumnPy"<<","<<"ColumnPz"<<","<<"Columnx"<<","<<"Columny"<<","<<"Columnz"<<std::endl;
         
         for(int i=1;i<=iFinal;i++)
         {
-           rk2implement(y,i);
+            leapfrogimplement(y,i);
            
             answerPx.push_back(w[0]);
             answerPy.push_back(w[1]);
@@ -47,38 +41,26 @@ class RK2
             answery.push_back(w[4]);
             answerz.push_back(w[5]);
             time.push_back(t0 +i*tStep);
-           
-            //file<<w[0]<<","<<w[1]<<","<<w[2]<<","<<w[3]<<","<<w[4]<<","<<w[5]<<std::endl;
-            
             y=w;
         }
 
-         file.close();
+
+         
     }
 
-    
-
-    void rk2implement(double y[],int i)
+    void leapfrogimplement(double y[],int i)
     {
-        double k1[6];
-        double k2[6];
+        
+        w[0] = y[0] + tStep*model(tStep*i,y[0],y[1],y[2],y[3],y[4],y[5],0);
+        w[1] = y[1] + tStep*model(tStep*i,y[0],y[1],y[2],y[3],y[4],y[5],1);
+        w[2] = y[2] + tStep*model(tStep*i,y[0],y[1],y[2],y[3],y[4],y[5],2);
 
-        for(int j=0;j<6;j++)
-        {  
-            k1[j] =tStep*model(t0+i*tStep,y[0],y[1],y[2],y[3],y[4],y[5],j);       
-        }
+        w[3]= y[3] +tStep*model(tStep*i,w[0],w[1],w[2],y[3],y[4],y[5],3);
+        w[4]= y[4] +tStep*model(tStep*i,w[0],w[1],w[2],y[3],y[4],y[5],4);
+        w[5]= y[5] +tStep*model(tStep*i,w[0],w[1],w[2],y[3],y[4],y[5],5);
 
-        for (int j=0;j<6;j++)
-        {
-            k2[j] =tStep*model(t0+i*tStep+tStep/2,y[0]+k1[0]/2,y[1]+k1[1]/2,y[2]+k1[2]/2,y[3]+k1[3]/2,y[4]+k1[4]/2,y[5]+k1[5]/2,j); 
-        }
-
-        for(int j=0; j<6;j++)
-        {
-            w[j]=y[j]+k2[j];
-        }
+        
     }
-
     double model(double time,  double px , double py, double pz, double x, double y,double z,int state )
     {
 
@@ -112,6 +94,8 @@ class RK2
         return pz/mass;
     }
     }
+
+
     public:
     double tStep;
     double t0;
@@ -121,9 +105,7 @@ class RK2
     double B[3];
     double charge = 1.60217662* pow(10,-19);
     double mass =9.10938356 *pow(10,-31);
-    
     double w[6];
-    
     std::vector<double> answerPx;
     std::vector<double> answerPy;
     std::vector<double> answerPz;
@@ -131,5 +113,7 @@ class RK2
     std::vector<double> answery;
     std::vector<double> answerz;
     std::vector<double> time;
+
 };
+
 #endif

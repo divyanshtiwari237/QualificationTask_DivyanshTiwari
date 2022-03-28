@@ -21,7 +21,7 @@ class Analytical
 
     void calculate(double y[])
     {
-        for (int i=0;i<N;i++)
+        for (int i=1;i<N;i++)
         {
             double time =i*tStep;
             answerPx.push_back(mass*y[1]*sin(2*PI*time/Timeperiod));

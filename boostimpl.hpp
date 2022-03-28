@@ -3,7 +3,7 @@
 typedef std::vector< double > state_type;
 
 double E[3]={0,0,0};
-double B[3]= {0,0,0.1};
+double B[3]= {0,0,1};
 double charge = 1.60217662*pow(10,-19);
 double mass =9.10938356*pow(10,-31);
 
