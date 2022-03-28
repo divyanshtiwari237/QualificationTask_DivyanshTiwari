@@ -35,7 +35,7 @@ int main()
     double y[6]={0,0.9*c,0,0,0,0}; // initial conditions of the particle
     double t0=0; //Initial time
     double tf=50.5*pow(10,-11);//final time
-    double tStep=0.25*1.78265*pow(10,-12);  // time step;
+    double tStep=0.25*1.78265*pow(10,-10);  // time step;
     int n =(10.5*pow(10,-9))/tStep;//number of steps in the integration
 
     Analytical A(B[2],n,t0,tf,y); //initialize the analytic solution with the required fields.
@@ -92,7 +92,7 @@ int main()
     integrate_adaptive(c_stepper, my_system , d , t0 , tf , tStep,my_observer );  //calculating values with the Integrate_adaptive method
      
      //Storing values in the data.csv file
-    writetocsv("data.csv",A.answerPx,rk.answerPx,lp.answerPx,Px, answer[0]);
+    writetocsv("data.csv",A.answerPx,rk.answerPx,lp.answerPx);
      
 
     
